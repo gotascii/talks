@@ -1,0 +1,140 @@
+Weird Mashups by Justin Marney
+
+I work at Viget Labs making Ruby web applications.
+I want to show you this neat contraption I built.
+
+Conway's Game of Life:
+An evolving game played on a grid of cells where each cell is either alive or dead.
+From an arbitrary start state, apply a set of rules on each round.
+
+Any live cell with fewer than two live neighbors dies, as if caused by underpopulation.
+Any live cell with more than three live neighbors dies, as if by overcrowding.
+Any live cell with two or three live neighbors lives on to the next generation.
+Any dead cell with exactly three live neighbors becomes a live cell.
+
+These simple rules lead to intriguing, complex pattern evolutions.
+
+An Idea:
+Use the Game of Life to generate MIDI patterns.
+Use the MIDI patterns to trigger a sound generator.
+Control the game in real-time with a Monome.
+Play the Game of Life like an instrument.
+
+Edit the start state on the Monome.
+Evolve every n milliseconds.
+Interpret each state as a set of MIDI triggers.
+Display each state via the Monome.
+Reset the game to the start state every x evolutions.
+Duplicate the above system across multiple MIDI channels.
+
+The Result:
+A multilayer, Game of Life, MIDI sequence generator controlled by the Monome triggering an external sound generator.
+
+Do it without writing code?
+
+*Demo*
+5m
+
+How is this possible? It is a mashup of several fringe technologies:
+The Monome, Open Sound Control, and the visual programming language called PureData.
+
+Fringe Technologies?
+You aren't going to get your next cubicle job by knowing how to code applications for the Monome using a visual programming language.  
+That said, these tools allow you to quickly create a working application with a usable interface.
+They allow you to mash together sources form vastly different domains with very little effort.
+
+The Weird Mahshup
+We'll take a look at some tools used to create mashups using unconventional sources:
+The visual programming language called Lily (which is just like PureData but functions in your browser).
+The physical computer interface called the Monome (which is a box of buttons and lights).
+
+The Monome
+A physical computing interface with an open-source hardware platform, hand-crafted by Brian Crabtree and Kelli Cain.
+
+*Video slides*
+
+Large community of open-source minded people creating Monome applications using both VPLs and text-based languages.
+Programs written in:
+Ruby, Python, Chuck, Max/Msp, PureData, etc.
+Programs that are:
+Sound generators, MIDI sequencers, pixel animators, games, application control surfaces, etc.
+
+Fundamentally, it is a constrained way of interacting with a computer.
+I choose to invest in the Monome for this reason:
+Constraints fuel creativity.
+Especially when you start working with an open ended API like Lily.
+It WAS an investment: 128 costs ~$800 while the 256 costs ~$1400.
+But, its something I felt good supporting and its worth far more to me than what I paid.
+
+Visual Programming Languages
+Create applications by manipulating graphical elements rather than text.
+VPL programs are like big state machines.
+
+The Basic Idea
+The fundamental elements of a VPL are boxes which implement functionality, and arrows which connect boxes and allow them to pass data.
+
+Why a VPL?
+The most obvious benefit is the lack of a real "syntax" that must be learned before jumping in and making something usable.
+The connected box API is intuitive and easily understandable.
+A more powerful benefit is that programs can be manipulated while they are running, i.e. during a performance, and the simple box/arrow interface makes this easy to do.
+
+Who uses a VPL?
+Most people using VPL's today are using them to create or assist in live performance applications such as audio generators, musical instrument control, art installations, etc.
+
+*Demo*
+Step through simple patch creation example in Lily.
+example.json
+Show some other "boxes"...?
+
+Lily
+Bill Orcutt created a VPL that runs as a Firefox Add-On using Chrome and Javascript.
+This environment gives your Lily patch access to a unique set of browser features.
+
+You can:
+Create a patch that opens a url.
+Process the DOM of that page and analyze the element contents.
+Manipulate the DOM elements.
+
+Let me show you this weird patch that comes with Lily.
+
+*Demo*
+4. Modifying the Page.json
+
+Lily is a Javascript application.
+Patches run on the JS engine in your browser.
+Every external is a Javascript class.
+
+You can
+Create new externals in Lily using Javascript.
+Use jQuery, REST APIs, or any other Javascript application from within Lily.
+Save your Lily patches as Firefox Add-Ons.
+
+Javascript? I thought you said no code?
+If you are here at *developer* day and are really excited by the idea of not writing code...
+
+*Demo*
+cheerio_test.json
+cheerio.js
+gmap.js...?
+
+Lily and the Monome via OpenSound Control (OSC) and Monomeserial
+The Monome transmits data to the computer via a serial protocol.
+Monomeserial converts serial data to an OSC protocol.
+OSC is a network communication protocol that uses URL-style naming.
+The Monome OSC protocol looks like this:
+When a button is pressed Monomeserial sends "/name/press x y 1" to the host ip and port.
+The name, ip & port are configured in Monomeserial.
+x, y is the coordinate of the button pressed.
+When a button is released Monomeserial sends "/name/press x y 0".
+Sending "/name/led x y 1" to the listen port will light up the led at coordinate x, y.
+Sending "/name/led x y 0" to the listen port will turn off the led at coordinate x, y.
+
+OSC in Lily
+oscsend and oscreceive externals.
+
+*Demo*
+osc_press_led_test.json
+osc_press_led_col_test.json
+seq.json
+
+Resources
