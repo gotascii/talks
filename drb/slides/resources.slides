@@ -1,0 +1,11 @@
+h1. Resources
+
+<ul>
+  <li>"DRb Introduction":http://segment7.net/projects/ruby/drb/introduction.html</li>
+  <li>"DRb Ruby Docs":http://www.ruby-doc.org/stdlib/libdoc/drb/rdoc/index.html</li>
+  <li>"How To Use A RingServer":http://segment7.net/projects/ruby/drb/rinda/ringserver.html</li>
+  <li>"Rinda Ruby Docs":http://www.ruby-doc.org/stdlib/libdoc/rinda/rdoc/index.html</li>
+  <li>"Mack Framework":http://www.mackframework.com/</li>
+  <li>"Mack On Github":http://github.com/markbates</li>
+  <li>"Mr. Bates Explains Distributed Routing":http://groups.google.com/group/mack-framework/browse_thread/thread/b50ee4917ddde0a6</li>
+</ul>

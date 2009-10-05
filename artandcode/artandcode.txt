@@ -1,0 +1,65 @@
+-Art && Code
+
+My labshare is on software, art, and programming education.  Talk about the idea of democratizing the education of programming for people with art and design sensibilities. It is based loosely on some idea raised by Golan Levin, who is the Associate Professor of Electronic Time-Based Art at Carnegie Mellon University.
+
+-Programming is something we can all do, should all do, and probably have reason to do.
+
+Interesting statement given that most people probably don't look to programming as a solution.  Mainly, this is because people don't know how to program.
+
+- we as artists
+From that perspective, I want to talk about some issues education faces right now as more individuals from disciplines other than computer science begin to approach programming as a means to create art.
+As well as talk about software's role in art and more importantly how artists are influencing the practice of programming.
+
+-Software's role in art is not well defined.
+Writing software as a means to create art is still generally viewed as something only "programmers" can achieve.
+Where are the software building tools for art?  To date there are only a small handful of legitimate ones (we'll talk about a few in a little bit).
+Why aren't more artists making software tools and using them to create art?
+
+-*graph*
+This might explain why.
+1982 - Time magazine's Man of the Year goes to the computer.
+2000 - The bubble.
+Clearly the influence here is cultural in nature.
+
+-Software's role in culture isn't well defined.
+-We are slow to acknowledge that, "Computation influences culture.  Culture influences computation."
+1. FaceSpace, MyBooks, gPhone
+2. FASTER! FaceSpace, Touch screen telephones
+
+Why?
+
+-For most people, software is something someone else makes.
+CS3, Flash, etc.
+
+Understandable, because computing platforms and most software packages don't offer any help in this department.
+
+iPhone SDK, lack of hardware modification manuals or support, lack of widely adopted open source software, etc.
+
+More importantly, people don't know what these tools are capable of or how to use them.
+Remember "Programming is something we can all do, should all do, and probably have reason to do."
+Only most people don't know exactly what it is they can do with software.
+
+In order to get more people making software, we need to improve overall software literacy.
+Now software literacy has often been interpreted to mean you can use Office, Adobe, and can type fast.  But, to be literate does not just mean you can read, it means you can write.  You create your own sentences that have not been written before...
+
+But you have to start somewhere right? We didn't all write amazing works of fiction and prose the first time we picked up a crayon.  Well..what if:
+
+-"Programming (an everyday skill), and Computer Science (a research subject) are different."
+And the perceived barrier to entry into software literacy comes from the fact that until very recently the Computer Science department has held a monopoly on teaching programming.  People who research computer science are probably not the best people to teach programming to artists.  Much like Proust is probably not the best choice for a 2nd grade english teacher.
+
+The key difference lies in the objectives of computer scientists vs the everyday programmer, in our case an artist.  This difference hasn't always existed as computational resources weren't evolved enough to support the everyday programmer.  For a long time the only type of computing one could do was computer science.  Since then CS has been taught by computer scientists to computer scientists.
+
+-It is time to start educating ourselves on how to use new software tools that are being created by artists as a means to not only teach other people how to program but as a means to create our own tools for creating expressive and creative art.
+
+Processing
+PureData
+Max/MSP
+
+7 Days of Earthquakes by Robert Hodgin
+The video shows seven days worth of earthquakes of magnitude 2.5 or higher.
+
+Adaptation by CHDH
+Live audio visual performance.
+
+Lightbox Sequencer by Jonas Vorwerk
+Interactive audio visual installation.

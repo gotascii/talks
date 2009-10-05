@@ -1,0 +1,23 @@
+h1. DRb: Distributed Ruby
+
+<p class="centered">
+  Expose an object to a remote client.
+</p>
+
+h1. Server
+
+:code code/drb/simple_server.rb
+
+h1. Client
+
+<p>Run this twice and be amazed.</p>
+
+:code code/drb/simple_client.rb
+
+h1. Clients Can Be Servers Too!
+
+:code code/drb/distance_server.rb
+
+h1. Clients Can Be Servers Too!
+
+:code code/drb/distance_client.rb

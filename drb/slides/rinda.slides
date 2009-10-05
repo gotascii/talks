@@ -1,0 +1,25 @@
+h1. Rinda: Simple TupleSpace
+
+<p class="centered">
+  Rinda:<br/>Concurrent thread-safe TupleSpace.
+</p>
+
+<p class="centered">
+  Rinda + DRb:<br/>Discover, access and modify remote TupleSpaces.
+</p>
+
+h1. Simple TupleSpace
+
+:code code/rinda/simple_tuplespace.rb[body]
+
+h1. Finding TupleSpaces
+
+:code code/rinda/ring_finger.rb
+
+h1. Publish Services
+
+:code code/rinda/distance_publisher.rb
+
+h1. Consume Services
+
+:code code/rinda/distance_consumer.rb

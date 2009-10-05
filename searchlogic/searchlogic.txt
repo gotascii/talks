@@ -1,0 +1,101 @@
+I. What?
+"ActiveRecord extension that allows you to search using a hash."
+Key: Also provides an object based interface to constructing said hash.
+Bonus: Provides pagination & sorting api.
+
+II. Who?
+by Ben Johnson aka binarylogic
+Usual resource urls apply: binarylogic.com, github.com/binarylogic
+
+III. Why?
+By wrapping sql based searching into an AR integrated api all of the "cruft" and repetition associated with writing both simple and complex based searches in rails is eliminated.  Providing a hash based interface allows search parameters to be specified via GET and POST because request parameters are passed via a hash.  Forms exist to allow you to craft specific request parameters.  Providing an object based api allows direct integration with the rails form building helpers.
+
+IV. How?
+Assume the following model: User => Orders => Line Items
+
+Standard AR hash based search options are now greatly expanded.
+
+User.all(
+  :conditions => {
+    :first_name_contains => "Ben",          # first_name like '%Ben%'
+    :email_ends_with => "binarylogic.com",  # email like '%binarylogic.com'
+    :created_after => Time.now,             # created_at > Time.now
+    :hour_of_created_at => 5,               # HOUR(created_at) > 5 (depends on DB type)
+    :orders => {
+      :line_items => {
+        :created_after => Time.now          # relationship attribute searching
+      }
+    }
+  },
+  :order_as => "ASC",
+  :order_by => {:user_group => :name}       # order user_groups.name ASC
+)
+
+Create an object based search.
+
+search = User.new_search
+search.conditions.first_name_contains = "Ben"
+search.conditions.email_ends_with = "binarylogic.com"
+search.conditions.created_after = Time.now
+search.conditiona.hour_of_created_at = 5
+search.conditions.orders.line_items.created_after = Time.now
+search.order_as = "ASC"
+search.order_by = {:user_group => :name}
+search.all
+
+Connect an object based search to the rails form helpers.
+
+# app/controllers/users_controller.rb
+def index
+  @search = User.new_search(params[:search])
+  @search.per_page = 20
+  @search.page = 3
+  @users, @users_count = @search.all, @search.count
+end
+
+# app/views/users/index.html.haml
+- form_for @search do |f|
+  - f.fields_for @search.conditions do |users|
+    = users.text_field :first_name_contains
+    = users.calendar_date_select :created_after # nice rails plugin for replacing date_select
+    - users.fields_for users.object.orders do |orders|
+      = orders.select :total_gt, (1..100)
+  = f.submit "Search"
+
+- unless @users_count.zero?
+  %table
+    %tr
+      %th= order_by_link :account => :name
+      %th= order_by_link :first_name
+      %th= order_by_link :last_name
+      %th= order_by_link :email
+    - @users.each do |user|
+      %tr
+        %td= user.account? ? user.account.name : "-"
+        %td= user.first_name
+        %td= user.last_name
+        %td= user.email
+
+  == Per page: #{per_page_select}
+  == Page: #{page_select}
+- else
+  No users were found.
+
+Notice: Searchlogic has view helpers that let you modify the following 4 aspects of your results:
+
+1.  Order by single column or array of columns: order_by
+2.  Descend or ascend yr data: order_as
+3.  Change how many items are on a page: per_page
+4.  Paginate through the reults: page
+
+Each action comes in three different types: link, links, & select
+
+order_by_link(:first_name)
+order_by_link([:first_name, :last_name])
+order_by_link({:orders => :total})
+order_by_link([{:orders => :total}, :first_name])
+
+Note: Automatically alternates between asc/desc.
+
+page_link(10)
+page_select

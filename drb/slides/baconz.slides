@@ -1,0 +1,42 @@
+h1. Yakn': A Haiku
+
+<p class="centered"><img src="images/gossip.jpg"/></p>
+
+<p class="centered">
+  Scandalous apps gab,<br/>
+  while you be straight up chillin.<br/>
+  How? DRb son!
+</p>
+
+h1. Why?
+
+<ul>
+  <li>Cloud Computing</li>
+  <li>Chat</li>
+  <li>Realtime Web</li>
+  <li>Management</li>
+  <li>Storage</li>
+  <li>Scalability</li>
+</ul>
+
+h1. Why?
+
+<p>
+  We understand concurrency:<br/>
+  <p class="indented">
+    Deep understanding hardwired into our brains.<br/>
+    Driving: We do not consciously think about tracking the positions of hundreds of objects.<br/>
+    We use the amygdala to react to external stimulus very rapidly.
+  </p>
+</p>
+
+<p>
+  The world is parallel:
+  <p class="indented">
+    We write programs that model the way objects in the real world behave.<br/>
+    Objects in the real world behave in parallel.<br/>
+    We jump through many hoops to get sequential languages to appear like real objects.
+  </p>
+</p>
+
+<p class="centered">How?</p>
