@@ -1,1 +1,1 @@
-A small presentation on concurrency in Ruby using DRb, Rinda, and Mack.
+A small presentation on concurrency in Ruby using DRb, Rinda, and Mack.  This presentation also served as an exploration of the S5 slideshow library http://meyerweb.com/eric/tools/s5/ as well as some enhancements by Dave Thomas http://pragdave.blogs.pragprog.com/pragdave/2008/05/our-take-on-pre.html.  To view the slide show open html/all.html in a browser.
