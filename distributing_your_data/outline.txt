@@ -1,0 +1,202 @@
+Intro
+  Justin Marney
+  GMU BCS
+  Ruby 2k7
+  Viget 2k8
+
+Abstract
+  TODO: Add this to the presentation
+
+Motivations
+
+  todays modern web applications are judged by their level of availability
+  this includes real uptime-availability as well as perceived availability
+    throughput issues that result in lost customers or an unusable application are just as bad as customers lost during a node or network outage
+
+  one of the core motivations is the ability to continue operating during "failure" scenarios
+  node failure in a single node network is 100% system failure
+  increase nodes, decrease failure
+  more importantly the ability to manage availability during node failure
+
+  failure examples
+    node failure (e.x. hard drive crash)
+    inter-node communication failure (e.x. network partition)
+    system performance failure (e.x. maximum throughput)
+
+  increase throughput
+    throughput impacts availability
+    system stops being available for upper percentile
+    throughput impacts perceived performance
+
+  increase durability (resistance to data loss)
+    durability impacts availability
+    loss of data makes the system unavailable
+
+  increase scalability...
+
+Scalability
+  "I can add twice as much X and get twice as much Y."
+  X: processor, RAM, disks, servers, bandwidth
+  Y: throughput, storage space, uptime, processing power
+  scalability is a ratio that indicates how much effort it takes to change a particular system characteristic
+
+  linear scalability
+    every system component has some management cost associated with it
+    as you add more of a particular component in order to scale some characteristic the benefit of additional pieces is balanced by management cost
+    a linear scalability factor is the case where the change in the system characteristic is the same for each component added
+    linear scalability is a Good Thing
+    knowing the scalability factor of the various system properties you want to grow is essential for your business
+    it allows you to understand and predict how much it will cost you to grow
+
+  up/down/vertical/horizontal/left-right ABAAB start
+    scaling direction
+      up: grow your infrastructure
+        multiple data centers, higher bandwidth
+      down: shrink your infrastructure
+        laptop, mobile, set-top
+    scaling method
+      vertical: add resources to a single node
+        CPU, RAM i.e. bigger, faster machines
+      horizontal: add more nodes
+        more cheap computers
+
+Facts of Life or
+Consequences of Reality or
+Consequences of Distributing Your Data
+  Benefits of distributing your data come from the ability to process your data asynchronously.
+    Distributed transaction is bound by the availability of all the nodes involved and 99.8% * 99.8% = 99.6%
+    Using distributed transactions the more nodes you add the less available you become!
+  If you accept that all of the requests in your system will be asynchronous you no longer have any concept of global state.
+  This models the real world more accurately as no two people share the same moment of truth.
+    David sends me an email saying he wants to fly fish this weekend...
+  There is no global truth. No single instant where two people share state. We are only sure of the past.
+
+  Side note: Impedance mismatch between RDBMS and data model is very similar to the impedance mismatch between stateless asynchronous
+  web requests and the synchronous backends we've tried to build for years.
+
+What about all that ACID?
+  Atomicity
+    a series of database operations either all occur, or nothing occurs
+  Consistency
+    transaction that does not violate any integrity constraints during its execution
+    entity integrity: record id points to one record, no duplicates
+  Isolation
+    operations cannot access or see data that has been modified during a transaction that has not yet completed
+  Durability
+    transactions that have committed will survive permanently
+    i.e. how easy is it to lose data in various failure scenarios
+
+  ACID defines a set of database system characteristics that aim to ensure consistency.
+  2PC and distributed transactions are built on the idea that *all* of our operations *need* this level of consistency.
+  What happens to ACID when we realize that in order scale we need to distribute our data and handle asynchronous operations on that data?
+  
+  Without global state you immediately remove the ability to guarantee A across my system.
+  Without a linear timeline of events there are no transactions and therefore no isolation.
+  Shows that the ACID principles are not orthogonal.
+  Durability conceptually changes as the canonical location of data might not exist.
+    System might be able to reconstruct some data on demand.
+  Without A, I, or D, consistency in the traditional sense is no longer present.
+
+Without ACID what can we predict or understand about our distributed systems?
+  CAP & BASE
+
+The CAP theorem
+  Eric Brewer at the 2000 Symposium on Principles of Distributed Computing (PODC) suggested it.
+  In 2002, Seth Gilbert and Nancy Lynch published a formal proof of the theorem.
+
+  Consistency: ACID meaning
+  Availability: If I can reach a non-failing node the system functions.
+  Partition-Tolerance: No matter which inter-node packets are being lost, if you can reach a node the system functions.
+
+  All systems are subject to these constraints.
+
+  single node systems bound by CAP
+    100% partition tolerant
+    100% consistent
+    barely available
+
+  multi-node examples
+    CA: Distributed transactions, 2-phase commit
+    CP: Quorum protocol, distributed databases
+    AP: sloppy quorum, hinted-handoff, no ACID, mad BASE
+
+  an increase in availability, depending on the approach, will result in consistency or partition tolerance loss
+  the only way to get availability on the internet is PT
+  not an absolute decision
+  most systems are a hybrid of CA, CP, & AP
+  levels of availability, types of availability (read/write), level of partition tolerance, and level of consistency can all change over time in a system
+
+What is it really?
+  Understanding the tradeoffs you can make and why you might want to make them is a major part of what makes distributed systems unique and powerful.
+  CAP doesn't say AP systems are *the* solution to your problem.
+  It gives you a concrete means of understanding what tradeoffs you are making when you build a system with certain strengths and weaknesses.
+  The concept of modeling your data, the operations on that data, and the characteristics of how it is distributed in order to achieve a system that scales predictably & fails predictably is a core concept in todays modern distributed systems.
+
+BASE: An ACID Alternative
+  Dan Pritchett, Associate for Computing Machinery Queue, 2008
+  Basically Available
+  Soft State
+  Eventually Consistent
+
+Eventual Consistency
+  Firstly, I think this should be renamed to Managed Consistency.
+  EC sounds scary.
+  We fear what we do not understand.
+  The key to managing your fear is understanding what is meant by "eventual".
+  It doesn't mean "probable" or "hopeful" or "indefinite time in the future".
+  It does describes what happens during a failure.
+
+  What happens during a failure?
+  During certain scenarios a decision must be made to serve up some stale data or completely deny a request.
+  This decision is not inherent to EC systems, it is present in *any* distributed system.
+  Systems that use distributed transactions or M/S replication make this decision for you.
+  EC systems expose interfaces that let you control the level of consistency vs. availability in your application.
+  You are probably already dealing with inconsistency management in your application: memcached.
+
+  In order to achieve availability in an asynchronous system, accept that failures are going to happen and manage the resulting inconsistency in your application.
+
+Reliability vs. Resiliency or
+Accepting Failure
+  Accept that failures are going to happen.
+  This is especially true because as you scale out you increase points of failure.
+  Global book counter example:
+    Sell the last book.
+    Book gets lost in the warehouse.
+  Because the world is asynchronous, the world is also EC.
+  Understand what those potential failures are and know explicitly what you are willing to give up during those failures in order to achieve a desired level of availability.
+  You want to know what is going to happen during a failure before your users do.
+
+How?
+  Don't interact with your data as one big global state that you change from moment to moment.
+  This forces decisions about how to handle consistency into you application (you probably were doing this anyway).
+  The challenge becomes determining the components that can be decoupled and integrated via asynchronous interactions.
+  Model different components of your system as independent components sending asynchronous requests to other components.
+  This doesn't meant *every* part of your system must operate this way!
+  However, you can use "ACID 2.0" to help identify and architect components than can.
+
+ACID 2.0
+  Associative
+    (a * b) * c = a * (b * c)
+    Don't care what order the requests get executed in.
+  Commutative
+    a + b = b + a
+    Don't care what order the requests get executed in.
+  Idempotent
+    a function is idempotent if, whenever it is applied twice to any value, it gives the same result as if it were applied once.
+    abs(abs (x)) = abs(x)
+    I don't care if things get retried.
+  Distributed
+
+No seriously, how?
+  sloppy quorum, hinted hand-off, Merkle synchronization, vector clocks, ...
+
+The Real World aka
+The World Your SysAdmin Lives In
+  incremental scalability
+    ability to scale out one node at a time with limited impact on operators or system
+  homogeneous responsibilities
+    distributed vs. decentralized
+  heterogeneous capabilities
+    load distribution strategies, consistent hashing variations
+
+
