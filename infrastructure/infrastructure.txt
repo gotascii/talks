@@ -1,0 +1,84 @@
+Repositories aka Where the magic sleeps
+  5 minutes of Git
+    VCS: version control system
+    think SVN, only totally awesome
+    The Synopsis
+      tell git to track your files
+      take snapshots of those files occasionally
+      share that history of snapshots with others
+      compare snapshots
+      revert back to previous snapshots
+    Why It Ruelz
+      most commands are offline
+      snapshots vs. changesets
+      branching!
+    Branching!
+      lightweight instant branching
+      branch in a single directory
+      detailed control over branch merging
+      stash partially completed work
+      local and remote branches
+      non-linear development
+      per-feature branches
+  Unfuddle repositories
+  The master branch
+Development aka The Tools of ye ole Trade
+  per developer laptop environment that includes
+  ruby, a really nice language
+  gems, shiny ruby packages
+  rails, a set of gems for making web apps
+  rails environments: (dev, test), production, ... more!
+  test-driven development, TDD
+    red, green, refactor
+    debugging is fast, roll back last change that broke test
+    influences design
+      considering optimal interface first
+      writing small cohesive pieces
+    minimizes "Into the Woods" effect
+Continuous Integration aka Dude, You Broke the Build
+  cruisecontrol.rb
+  http://cruise.lab.viget.com
+  The Synopsis
+    a test environment setup on an internal server (pittsburgh)
+    a server running that watches for new commits to the project
+    checks out new commit, runs all of the tests
+    if a test fails it notifies the developers
+  Why It Ruelz
+    do some work
+    go to commit, get notified that another dev has made changes
+    get those changes and *integrate* them
+    push up your changes with the other integrated changes
+    you just broke the build!
+  auto-deployment!
+Deployment aka Ship It!
+  capistrano, a ruby gem that pushes code around
+  configuration stored in the app
+  defines which branch to deploy from
+  defines which server to deploy to
+  deploys the latest snapshot on the defined branch
+  devs configure the servers so that we can deploy to them
+  Why It Ruelz
+    allows us to easily manage what's live
+    rollback effortlessly
+    have a clearly defined state running
+Integration
+  internal server, pottsville
+  project.lab.viget.com, an internal dns entry
+  only accessible when connected to viget's network
+  runs the app in development mode
+  cruise auto-deploys to this server if the build passes
+  represents the bleeding-edge state of the app
+  intended to be used by the PMs to QA tickets
+Staging
+  internal server, pottsville
+  project.clients.viget.com, external dns entry on pair
+  accessible from the interwebs
+  runs the app in production mode
+  deploying to this server is the responsibility of a dev
+  when to deploy is mainly up to the PM
+  intended to be used by the client to QA
+Production
+  highly variable across clients
+  preferred hosting providers: rackspace, slicehost
+  similar deployment scenario as staging
+Workflow Review!
